@@ -133,26 +133,36 @@ import { getUserList, updateUser, addUser, deleteUser } from "@/api/userset";
 import Pagination from "@/components/Pagination";
 export default {
   name: "user",
+  //分页组件
   components: { Pagination },
   data() {
     return {
       baseUrl: "http://127.0.0.1:7001",
       title: "修改",
+      //是否显示弹出界面
       dialogFormVisible: false,
+      //是否显示加载
       listLoading: true,
+      //加载到的数据
       list: [],
+      //数据总数
       total: 0,
+      //查询参数
       query: {
         page: 1,
         count: 20,
         str: undefined,
       },
+      //搜索文字
       search: "",
+      //一条数据  修改 添加时用
       temp: {},
+      //下拉选项框
       genderOptions: [
         { value: 1, label: "男" },
         { value: 0, label: "女" },
       ],
+      //提示
       rules: {
         username: [
           { required: true, message: "请输入用户名", trigger: "blur" },
@@ -167,7 +177,7 @@ export default {
       },
     };
   },
-
+  //过滤 显示男女
   filters: {
     genderFilter(type) {
       if (type == 0) {
@@ -176,11 +186,13 @@ export default {
       return "男";
     },
   },
+  //首次加载数据
   created() {
     this.fetchData();
   },
 
   methods: {
+    //加载数据
     async fetchData() {
       this.listLoading = true;
       await getUserList(this.query).then((res) => {
@@ -190,6 +202,7 @@ export default {
       });
       this.listLoading = false;
     },
+    //修改信息
     handleUpdate(index) {
       // this.resetTemp();
       this.title = "修改用户信息";
@@ -199,12 +212,12 @@ export default {
         this.$refs["dataForm"].clearValidate();
       });
     },
-
+    //搜索
     handleFilter() {
       this.query.page = 1;
       this.fetchData();
     },
-
+    //添加
     handleCreate() {
       this.title = "添加用户";
       this.temp = { avatar: "" };
@@ -213,6 +226,7 @@ export default {
         this.$refs["dataForm"].clearValidate();
       });
     },
+    //删除
     handleDelete(row) {
       this.$confirm(`你确定要删除用户${row.nickName}吗`, "删除用户?", {
         confirmButtonText: "确定",
@@ -225,13 +239,15 @@ export default {
         });
       });
     },
-    createData() {
-      addUser(this.temp).then((res) => {
+    //添加
+    async createData() {
+      await addUser(this.temp).then((res) => {
         this.showMsg(res.code, "添加成功");
         this.dialogFormVisible = false;
         this.fetchData();
       });
     },
+    //修改
     updateData() {
       let body = {
         username: this.temp.username,
@@ -247,12 +263,14 @@ export default {
       });
     },
 
+    //图片设置
     handleAvatarSuccess(res, file) {
       console.log(res, file);
       this.temp.avatar = res.data.file;
 
       console.log(this.temp, "aaaaa");
     },
+    //上传图片
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
       const isLt2M = file.size / 1024 / 1024 < 2;
@@ -265,7 +283,7 @@ export default {
       }
       return isJPG && isLt2M;
     },
-
+    //显示弹窗
     showMsg(code, msg) {
       if (code == 200) {
         this.$message({
