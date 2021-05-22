@@ -22,14 +22,6 @@
         icon="el-icon-edit"
         @click="handleCreate"
       >添加</el-button>
-      <!-- <el-button
-        v-waves
-        :loading="downloadLoading"
-        class="filter-item"
-        type="primary"
-        icon="el-icon-download"
-        @click="handleDownload"
-      >导出表格</el-button>-->
     </div>
 
     <el-table
@@ -41,10 +33,10 @@
     >
       <el-table-column align="center" type="index" label="序号" width="50"></el-table-column>
       <el-table-column align="center" prop="id" label="ID" width="300"></el-table-column>
-      <el-table-column align="center" prop="username" label="账号"></el-table-column>
+      <el-table-column align="center" sortable prop="username" label="账号"></el-table-column>
       <el-table-column align="center" prop="password" label="密码"></el-table-column>
-      <el-table-column align="center" prop="nickName" label="昵称"></el-table-column>
-      <el-table-column align="center" prop="gender" label="性别">
+      <el-table-column align="center" sortable prop="nickName" label="昵称"></el-table-column>
+      <el-table-column align="center" sortable prop="gender" label="性别">
         <template slot-scope="{row}">
           <div>{{row.gender | genderFilter}}</div>
         </template>
@@ -68,7 +60,7 @@
     </el-table>
 
     <pagination
-      v-show="total>20"
+      v-show="total>10"
       :total="total"
       :page.sync="query.page"
       :limit.sync="query.count"
@@ -100,7 +92,7 @@
           <el-select v-model="temp.gender" placeholder="选择性别">
             <el-option
               v-for="item in genderOptions"
-              :kkey="item.value"
+              :key="item.label"
               :label="item.label"
               :value="item.value"
             />
@@ -240,8 +232,8 @@ export default {
       });
     },
     //添加
-    async createData() {
-      await addUser(this.temp).then((res) => {
+    createData() {
+      addUser(this.temp).then((res) => {
         this.showMsg(res.code, "添加成功");
         this.dialogFormVisible = false;
         this.fetchData();
@@ -301,7 +293,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;

@@ -1,5 +1,5 @@
 <template>
-  <div :class="'login-container app-login-back-'+getRandomInt(1,5)">
+  <div class="login-container" ref="loginPage">
     <el-form
       ref="loginForm"
       :model="loginForm"
@@ -9,7 +9,7 @@
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title" ref="title">摄影分享后台</h3>
       </div>
 
       <el-form-item prop="username">
@@ -65,14 +65,14 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error("Please enter the correct user name"));
+        callback(new Error("请输入用户名"));
       } else {
         callback();
       }
     };
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error("The password can not be less than 6 digits"));
+        callback(new Error("请输入密码"));
       } else {
         callback();
       }
@@ -103,7 +103,14 @@ export default {
       immediate: true,
     },
   },
+  mounted() {
+    this.$refs.loginPage.classList.add(this.setBgClass());
+    this.$refs.title.classList.add(this.setBgClass());
+  },
   methods: {
+    setBgClass() {
+      return "app-login-back-" + this.getRandomInt(1, 5);
+    },
     getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     },
@@ -144,15 +151,15 @@ export default {
 /* 修复input 背景不协调 和光标变色 */
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
-$bg: #283443;
-$light_gray: #fff;
+$bg: #ffffff;
+$light_gray: #333;
 $cursor: #fff;
 
-@supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-  .login-container .el-input input {
-    color: $cursor;
-  }
-}
+// @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
+//   .login-container .el-input input {
+//     color: $cursor;
+//   }
+// }
 
 /* reset element-ui css */
 .login-container {
@@ -228,16 +235,19 @@ $light_gray: #eee;
 .login-container {
   min-height: 100%;
   width: 100%;
-  background-color: $bg;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .login-form {
-    position: relative;
     width: 520px;
     max-width: 100%;
-    padding: 160px 35px 0;
-    margin: 0 auto;
+    padding: 35px 35px 0;
+    background-color: #fafafad8;
     overflow: hidden;
+    border-radius: 5px;
+    margin-bottom: 100px;
   }
 
   .tips {
@@ -265,7 +275,12 @@ $light_gray: #eee;
 
     .title {
       font-size: 26px;
-      color: $light_gray;
+      color: #333;
+      background-size: 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-repeat: no-repeat;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
