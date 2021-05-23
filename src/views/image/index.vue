@@ -4,7 +4,7 @@
       <el-upload
         class="upload-demo"
         ref="upload"
-        action="http://localhost:7001/api/upload"
+        :action="baseUrl+'/api/upload'"
         :on-preview="handlePreview"
         :on-remove="handleRemove"
         :file-list="fileList"
@@ -79,7 +79,7 @@ export default {
   components: { Pagination },
   data() {
     return {
-      baseUrl: "http://127.0.0.1:7001",
+      baseUrl: this.$store.state.app.baseUrl,
       title: "修改",
       listLoading: true,
       list: [],

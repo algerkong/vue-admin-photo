@@ -101,7 +101,7 @@
         <el-form-item label="头像" prop="type">
           <el-upload
             class="avatar-uploader"
-            action="http://localhost:7001/api/upload"
+            :action="baseUrl+'/api/upload'"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
@@ -129,7 +129,7 @@ export default {
   components: { Pagination },
   data() {
     return {
-      baseUrl: "http://127.0.0.1:7001",
+      baseUrl: this.$store.state.app.baseUrl,
       title: "修改",
       //是否显示弹出界面
       dialogFormVisible: false,
