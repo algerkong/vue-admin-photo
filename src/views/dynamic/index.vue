@@ -348,12 +348,14 @@ export default {
     //修改
     updateData() {
       let body = {
-        username: this.temp.username,
-        password: this.temp.password,
-        nickName: this.temp.nickName,
-        gender: this.temp.gender,
-        avatar: this.temp.avatar,
+        title: this.temp.title,
+        status: this.temp.status,
+        content: this.temp.content,
+        tagId: this.temp.tagId,
+        userId: this.temp.userId,
       };
+
+      console.log(body, "Aaa啊啊啊啊啊啊啊啊", this.temp);
       updateDynamic(this.temp.id, body).then((res) => {
         this.showMsg(res.code, "修改成功");
         this.dialogFormVisible = false;

@@ -138,6 +138,10 @@ export default {
       });
     },
     updateData(name) {
+      console.log(name, "aaaaa");
+
+      console.log(this.temp);
+
       let body = {
         name: name,
       };
