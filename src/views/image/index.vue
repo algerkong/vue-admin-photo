@@ -38,7 +38,8 @@
         :key="img.id"
         :style="{top:img.top+'px',left:img.left+'px',width:waterfallImgWidth+'px',height:img.height}"
       >
-        <img :src="img.src" alt />
+        <!-- <img :src="img.src" alt /> -->
+        <el-image :src="img.src" :preview-src-list="getImgListBig(index)" />
         <div class="btn-delete-img">
           <i class="el-icon-circle-close" color="red" @click="handleDelete(img.row)"></i>
         </div>
@@ -88,6 +89,10 @@ export default {
         page: 1,
         count: 20,
       },
+      srcList: [
+        "https://fuss10.elemecdn.com/8/27/f01c15bb73e1ef3793e64e6b7bbccjpeg.jpeg",
+        "https://fuss10.elemecdn.com/1/8e/aeffeb4de74e2fde4bd74fc7b4486jpeg.jpeg",
+      ],
       search: "",
       temp: {},
       waterfallList: [],
@@ -96,7 +101,7 @@ export default {
       waterfallImgRight: 10,
       waterfallImgBottom: 10,
       waterfallDeviationHeight: [],
-      fileList: null,
+      fileList: [],
     };
   },
   created() {
@@ -127,6 +132,19 @@ export default {
           this.fetchData();
         });
       });
+    },
+
+    async getImgListBig(index) {
+      console.log(this.waterfallList);
+      let arr = [];
+      let i = 0;
+      for (i; i < this.waterfallList.length; i++) {
+        arr.push(this.waterfallList[i + index].src);
+        if (i + index >= this.imgArr.length - 1) {
+          index = 0 - (i + 1);
+        }
+      }
+      return arr;
     },
 
     submitUpload() {
@@ -262,10 +280,15 @@ export default {
   float: left;
   position: absolute;
 }
-.v-waterfall-item img {
+
+.v-waterfall-item .el-image {
+  display: block;
+  overflow: inherit;
+}
+.v-waterfall-item .el-image > img {
   width: 100%;
   height: 100%;
-  box-shadow: 5px 5px 5px #c0c0c0;
+  box-shadow: 5px 5px 5px #c0c0c085;
   border-radius: 5px;
 }
 
