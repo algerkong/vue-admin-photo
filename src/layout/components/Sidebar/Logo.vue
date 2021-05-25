@@ -2,11 +2,11 @@
   <div class="sidebar-logo-container" :class="{'collapse':collapse}">
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo" />
+        <img v-if="logo" :src="baseUrl + avatar" class="sidebar-logo" />
         <h1 v-else class="sidebar-title">{{ title }}</h1>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo" />
+        <!-- <img v-if="logo" :src="logo" class="sidebar-logo" /> -->
         <h1 class="sidebar-title">{{ title }}</h1>
       </router-link>
     </transition>
@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "SidebarLogo",
   props: {
@@ -22,10 +24,14 @@ export default {
       required: true,
     },
   },
+  computed: {
+    ...mapGetters(["avatar"]),
+  },
   data() {
     return {
       title: "Alger Photo 摄影管理",
       logo: "https://pic.imgdb.cn/item/60a609806ae4f77d355bb855.jpg",
+      baseUrl: this.$store.state.app.baseUrl,
     };
   },
 };
@@ -44,8 +50,8 @@ export default {
 .sidebar-logo-container {
   position: relative;
   width: 100%;
-  height: 50px;
-  line-height: 50px;
+  height: 70px;
+  line-height: 70px;
   background: #2b2f3a;
   text-align: center;
   overflow: hidden;

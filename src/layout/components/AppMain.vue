@@ -8,13 +8,13 @@
 
 <script>
 export default {
-  name: 'AppMain',
+  name: "AppMain",
   computed: {
     key() {
-      return this.$route.path
-    }
-  }
-}
+      return this.$route.path;
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -25,8 +25,8 @@ export default {
   position: relative;
   overflow: hidden;
 }
-.fixed-header+.app-main {
-  padding-top: 50px;
+.fixed-header + .app-main {
+  padding-top: 70px;
 }
 </style>
 

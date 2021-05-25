@@ -66,6 +66,8 @@ service.interceptors.response.use(
       //     })
       //   })
       // }
+
+      console.log(res, "res");
       return Promise.reject(new Error(res.message || '出错了'))
     } else {
       return res

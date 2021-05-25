@@ -1,14 +1,16 @@
 <template>
   <div class="navbar">
-    <hamburger
-      :is-active="sidebar.opened"
-      class="hamburger-container"
-      @toggleClick="toggleSideBar"
-    />
+    <div class="hamburger-breadcrumb">
+      <hamburger
+        :is-active="sidebar.opened"
+        class="hamburger-container"
+        @toggleClick="toggleSideBar"
+      />
 
-    <breadcrumb class="breadcrumb-container" />
-
+      <breadcrumb class="breadcrumb-container" />
+    </div>
     <div class="right-menu">
+      <div class="user-name">{{name}}</div>
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img :src="baseUrl+avatar+'?imageView2/1/w/80/h/80'" class="user-avatar" />
@@ -35,7 +37,7 @@ import Hamburger from "@/components/Hamburger";
 export default {
   data() {
     return {
-      baseUrl: "http://localhost:7001",
+      baseUrl: this.$store.state.app.baseUrl,
     };
   },
   components: {
@@ -43,7 +45,7 @@ export default {
     Hamburger,
   },
   computed: {
-    ...mapGetters(["sidebar", "avatar"]),
+    ...mapGetters(["sidebar", "avatar", "name"]),
   },
   methods: {
     toggleSideBar() {
@@ -59,16 +61,19 @@ export default {
 
 <style lang="scss" scoped>
 .navbar {
-  height: 50px;
   overflow: hidden;
   position: relative;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  .hamburger-breadcrumb {
+    display: flex;
+    align-items: center;
+  }
   .hamburger-container {
-    line-height: 46px;
-    height: 100%;
-    float: left;
     cursor: pointer;
     transition: background 0.3s;
     -webkit-tap-highlight-color: transparent;
@@ -78,17 +83,16 @@ export default {
     }
   }
 
-  .breadcrumb-container {
-    float: left;
-  }
-
   .right-menu {
-    float: right;
     height: 100%;
-    line-height: 50px;
+    display: flex;
+    align-items: center;
 
     &:focus {
       outline: none;
+    }
+    .user-name {
+      margin-right: 20px;
     }
 
     .right-menu-item {

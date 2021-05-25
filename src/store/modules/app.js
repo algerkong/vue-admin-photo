@@ -5,7 +5,7 @@ const state = {
     opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
     withoutAnimation: false
   },
-  baseUrl: "http://localhost:7001",
+  baseUrl: process.env.VUE_APP_BASE_API,
   device: 'desktop'
 }
 

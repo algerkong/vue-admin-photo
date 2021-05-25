@@ -87,7 +87,7 @@ export default {
 
   .no-redirect {
     color: #97a8be;
-    cursor: text;
+    cursor: pointer;
   }
 }
 </style>
