@@ -34,8 +34,6 @@ export default {
   methods: {
     rTime(date) {
       let json_date = new Date(date).toJSON();
-
-      console.log(json_date);
       return new Date(new Date(json_date))
         .toISOString()
         .replace(/T/g, " ")
@@ -72,7 +70,6 @@ $paddingWidth: 25px;
   }
   .user-list {
     font-size: 18px;
-    margin-right: 17px;
     .user-item {
       padding: $paddingWidth $paddingWidth 0;
       display: flex;
@@ -101,7 +98,7 @@ $paddingWidth: 25px;
 
       .user-item-count {
         color: #333;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 400;
       }
     }

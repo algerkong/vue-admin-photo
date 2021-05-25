@@ -18,6 +18,9 @@
     </el-row>
 
     <el-row :gutter="10" class="card-page">
+      <el-col :lg="12" :xs="24">
+        <user-dynamiclist />
+      </el-col>
       <el-col :lg="6" :xs="24">
         <user-dynamic />
       </el-col>
@@ -32,6 +35,7 @@
 import { mapGetters } from "vuex";
 import { getUserListCount, getHomeCount, getNewUser } from "@/api/home";
 import UserDynamic from "./components/UserDynamic";
+import UserDynamiclist from "./components/UserDynamiclist";
 import UserNew from "./components/UserNew";
 
 export default {
@@ -42,6 +46,7 @@ export default {
   components: {
     UserDynamic,
     UserNew,
+    UserDynamiclist,
   },
   data() {
     return {

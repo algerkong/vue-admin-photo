@@ -34,7 +34,7 @@
           <el-image class="dynamic-item-avatar" :src="baseUrl + dynamic.user.avatar" fil="cover" />
           <div>
             <div class="dynamic-item-name">{{dynamic.user.nickName}}</div>
-            <div class="dynamic-item-time">{{dynamic.createdAt | makeDate}}</div>
+            <div class="dynamic-item-time">{{rTime(dynamic.createdAt)}}</div>
           </div>
         </div>
         <div class="dynamic-item-text">
@@ -201,52 +201,6 @@ export default {
           return "编辑推荐";
       }
     },
-    makeDate(date) {
-      try {
-        var newDate = new Date(date);
-        //在小于10的月份前补0
-        var month =
-          eval(newDate.getMonth() + 1) < 10
-            ? "0" + eval(newDate.getMonth() + 1)
-            : eval(newDate.getMonth() + 1);
-        //在小于10的日期前补0
-        var day =
-          newDate.getDate() < 10 ? "0" + newDate.getDate() : newDate.getDate();
-        //在小于10的小时前补0
-        var hours =
-          newDate.getHours() < 10
-            ? "0" + newDate.getHours()
-            : newDate.getHours();
-
-        //在小于10的分钟前补0
-        var minutes =
-          newDate.getMinutes() < 10
-            ? "0" + newDate.getMinutes()
-            : newDate.getMinutes();
-        //在小于10的秒数前补0
-        var seconds =
-          newDate.getSeconds() < 10
-            ? "0" + newDate.getSeconds()
-            : newDate.getSeconds();
-        //拼接时间
-        var stringDate =
-          newDate.getFullYear() +
-          "-" +
-          month +
-          "-" +
-          day +
-          " " +
-          hours +
-          ":" +
-          minutes +
-          ":" +
-          seconds;
-      } catch (e) {
-        var stringDate = "0000-00-00 00:00:00";
-      } finally {
-        return stringDate;
-      }
-    },
   },
   created() {
     this.fetchData();
@@ -263,6 +217,14 @@ export default {
       });
       this.listLoading = false;
       this.temp = {};
+    },
+
+    rTime(date) {
+      let json_date = new Date(date).toJSON();
+      return new Date(new Date(json_date))
+        .toISOString()
+        .replace(/T/g, " ")
+        .replace(/\.[\d]{3}Z/, "");
     },
 
     //获取标签
@@ -326,12 +288,12 @@ export default {
       });
     },
     handleDelete(row) {
-      this.$confirm(`你确定要删除标签${row.name}吗`, "删除标签?", {
+      this.$confirm(`你确定要删除标签${row.title}吗`, "删除标签?", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
       }).then(() => {
-        deleteTag(row.id).then((res) => {
+        deleteDynamic(row.id).then((res) => {
           this.showMsg(res.code, "删除成功");
           this.fetchData();
         });
@@ -380,7 +342,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;

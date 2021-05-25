@@ -68,7 +68,6 @@ $paddingWidth: 25px;
   }
   .user-list {
     font-size: 18px;
-    margin-right: 17px;
     .user-item {
       padding: $paddingWidth $paddingWidth 0;
       display: flex;
