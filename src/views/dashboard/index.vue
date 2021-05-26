@@ -1,6 +1,10 @@
 <template>
   <div class="dashboard-container">
-    <el-row :gutter="10" class="card-page">
+    <el-row class="dashboard-text">
+      <el-col :span="24" class="title">毒鸡汤</el-col>
+      <el-col :span="24" class="text">{{rWord}}</el-col>
+    </el-row>
+    <el-row :gutter="30" class="card-page">
       <el-col :lg="6" :xs="24" v-for="item in cardCountList" :key="item.name">
         <div class="card">
           <div
@@ -17,7 +21,7 @@
       </el-col>
     </el-row>
 
-    <el-row :gutter="10" class="card-page">
+    <el-row :gutter="30" class="card-page">
       <el-col :lg="12" :xs="24">
         <user-dynamiclist />
       </el-col>
@@ -37,6 +41,7 @@ import { getUserListCount, getHomeCount, getNewUser } from "@/api/home";
 import UserDynamic from "./components/UserDynamic";
 import UserDynamiclist from "./components/UserDynamiclist";
 import UserNew from "./components/UserNew";
+import axios from "axios";
 
 export default {
   name: "Dashboard",
@@ -52,14 +57,27 @@ export default {
     return {
       cardCountList: [],
       newUserList: [],
+      rWord: "",
     };
   },
   created() {
     getHomeCount().then((res) => {
       this.cardCountList = res.data;
     });
+    this.getText();
   },
   methods: {
+    getText() {
+      let url = "https://api.btstu.cn/yan/api.php?charset=utf-8&encode=json";
+      axios.get(url).then((res) => {
+        this.rWord = res.data.text;
+      });
+      setInterval(() => {
+        axios.get(url).then((res) => {
+          this.rWord = res.data.text;
+        });
+      }, 10000);
+    },
     getCardIcon(name) {
       switch (name) {
         case "用户":
@@ -93,14 +111,21 @@ $paddingWidth: 25px;
 
 .dashboard {
   &-container {
-    padding: 30px;
+    padding: 40px 25px 0;
     box-sizing: border-box;
     background-color: #f8f8fb;
     min-height: calc(100vh - 70px);
   }
   &-text {
-    font-size: 30px;
-    line-height: 46px;
+    margin-bottom: 40px;
+    .title {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    .text {
+      font-size: 18px;
+      color: #979797;
+    }
   }
 }
 

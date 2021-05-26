@@ -14,4 +14,8 @@ export default {
 .user .el-scrollbar__wrap {
   overflow-x: hidden !important;
 }
+
+.el-dialog {
+  border-radius: 10px;
+}
 </style>

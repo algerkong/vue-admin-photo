@@ -24,7 +24,7 @@
       >添加</el-button>
     </div>
 
-    <div class="dynamic-list" v-loading="listLoading">
+    <!--     <div class="dynamic-list" v-loading="listLoading">
       <div
         class="dynamic-item"
         v-for="(dynamic,index) in list.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
@@ -43,7 +43,7 @@
         </div>
       </div>
     </div>
-
+    -->
     <el-table
       v-loading="listLoading"
       :data="list.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
@@ -367,7 +367,7 @@ export default {
   display: block;
 }
 
-.dynamic-list {
+/* .dynamic-list {
   display: flex;
   flex-wrap: wrap;
   background-color: #f0f0f0;
@@ -418,7 +418,7 @@ export default {
     }
   }
 }
-
+ */
 .user-option {
   height: 60px;
   padding: 10px;

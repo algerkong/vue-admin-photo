@@ -118,6 +118,19 @@ export const constantRoutes = [
   },
 
   {
+    path: '/banner',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'banner',
+        component: () => import('@/views/banner/index'),
+        meta: { title: '轮播管理', icon: 'el-icon-camera' }
+      }
+    ]
+  },
+
+  {
     path: '/image',
     component: Layout,
     children: [
